@@ -1,4 +1,47 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+/* Activar View Transitions automáticas */
+@view-transition {
+  navigation: auto;
+}
+
+/* Duración por defecto */
+::view-transition-group(*) {
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+}
+
+/* Salida de página */
+::view-transition-old(*) {
+  animation-name: slide-out-to-left;
+}
+
+/* Entrada de página */
+::view-transition-new(*) {
+  animation-name: slide-in-from-right;
+}
+
+/* Animaciones */
+@keyframes slide-out-to-left {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+}
+
+@keyframes slide-in-from-right {
+  from {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
 
 :root {
   --bg: #07080d;
