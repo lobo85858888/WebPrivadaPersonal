@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <script src="ip.js"></script>
+
+    <title>
+      Guía completa — Todos los tiempos verbales + Condicionales (explicado en
+      castellano)
+    </title>
+    <style>
+      :root {
+        --blue: #2563eb;
+        --green: #059669;
+        --bg: #f1f5f9;
+        --card: #fff;
+        --red: #dc2626;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family:
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          Segoe UI,
+          Roboto,
+          Helvetica,
+          Arial,
+          sans-serif;
+        background: var(--bg);
+        color: #0f172a;
+        line-height: 1.6;
+      }
+      header {
+        background: linear-gradient(135deg, var(--blue), #1e40af);
+        color: #fff;
+        padding: 36px 18px;
+        text-align: center;
+      }
+      header h1 {
+        margin: 0;
+        font-size: clamp(1.6rem, 4vw, 2.4rem);
+      }
+      main {
+        max-width: 1200px;
+        margin: auto;
+        padding: 24px;
+      }
+      section {
+        margin-top: 34px;
+      }
+      h2 {
+        color: var(--blue);
+        border-left: 6px solid var(--blue);
+        padding-left: 12px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 18px;
+        margin-top: 16px;
+      }
+      .card {
+        background: var(--card);
+        padding: 16px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(2, 6, 23, 0.06);
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 12px;
+        font-size: 0.95rem;
+      }
+      th,
+      td {
+        border: 1px solid #e6eef6;
+        padding: 10px;
+        vertical-align: top;
+      }
+      th {
+        background: var(--blue);
+        color: #fff;
+      }
+      .formula {
+        font-weight: 700;
+        color: #b91c1c;
+      }
+      .example {
+        color: var(--green);
+        font-weight: 600;
+      }
+      .note {
+        background: #ecfeff;
+        border-left: 6px solid #06b6d4;
+        padding: 12px;
+        border-radius: 8px;
+        margin-top: 12px;
+      }
+      .warn {
+        background: #fff1f2;
+        border-left: 6px solid var(--red);
+        padding: 12px;
+        border-radius: 8px;
+        margin-top: 12px;
+      }
+      footer {
+        text-align: center;
+        margin-top: 40px;
+        padding: 18px;
+        color: #475569;
+      }
+      .usage {
+        margin-top: 8px;
+        font-size: 0.95rem;
+      }
+      .translation {
+        font-style: italic;
+        color: #374151;
+        margin-top: 6px;
+      }
+      @media (max-width: 600px) {
+        table {
+          font-size: 0.85rem;
+        }
+      }
+      a {
+        color: rgb(255, 255, 255);
+        background-image: linear-gradient(
+          to bottom,
+          transparent 50%,
+          #fcf113 0
+        );
+        background-size: 0% 100%;
+        background-repeat: no-repeat;
+        text-decoration: none;
+        transition: background-size 1s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>
+        📚 Guía COMPLETA de Tiempos Verbales — Explicaciones en castellano
+      </h1>
+      <p style="opacity: 0.9; max-width: 820px; margin: 10px auto 0">
+        Estructura, cuándo usarlo y ejemplos en inglés + traducción. Ideal para
+        2º Bachillerato / EBAU.
+      </p>
+      <a href="index.html"> ATRAS </a>
+    </header>
+
+    <main>
+      <section>
+        <h2>🔎 Resumen rápido — Tabla con todas las formas</h2>
+        <div class="card">
+          <table>
+            <tr>
+              <th>Tense</th>
+              <th>Fórmula (esquema)</th>
+              <th>Ejemplo</th>
+            </tr>
+            <tr>
+              <td>Present Simple</td>
+              <td class="formula">S + V(s/es)</td>
+              <td class="example">
+                I study every day.
+                <div class="translation">Yo estudio todos los días.</div>
+              </td>
+            </tr>
+            <tr>
+              <td>Present Continuous</td>
+              <td class="formula">S + am/is/are + V-ing</td>
+              <td class="example">
+                She is studying now.
+                <div class="translation">Ella está estudiando ahora.</div>
+              </td>
+            </tr>
+            <tr>
+              <td>Present Perfect</td>
+              <td class="formula">S + have/has + past participle</td>
+              <td class="example">
+                They have finished the test.
+                <div class="translation">Ellos han terminado el examen.</div>
+              </td>
+            </tr>
+            <tr>
+              <td>Present Perfect Continuous</td>
+              <td class="formula">S + have/has + been + V-ing</td>
+              <td class="example">
+                We have been studying for two hours.
+                <div class="translation">Llevamos estudiando dos horas.</div>
+              </td>
+            </tr>
+            <tr>
+              <td>Past Simple</td>
+              <td class="formula">S + V(ed) / irregular</td>
+              <td class="example">
+                He studied yesterday.
+                <div class="translation">Él estudió ayer.</div>
+              </td>
+            </tr>
+            <tr>
+              <td>Past Continuous</td>
+              <td class="formula">S + was/were + V-ing</td>
+              <td class="example">
+                They were studying at 8pm.
+                <div class="translation">
+                  Ellos estaban estudiando a las 8pm.
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Past Perfect</td>
+              <td class="formula">S + had + past participle</td>
+              <td class="example">
+                She had finished when I arrived.
+                <div class="translation">
+                  Ella ya había terminado cuando llegué.
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Past Perfect Continuous</td>
+              <td class="formula">S + had + been + V-ing</td>
+              <td class="example">
+                He had been working all day.
+                <div class="translation">
+                  Él había estado trabajando todo el día.
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Future Simple (will)</td>
+              <td class="formula">S + will + V</td>
+              <td class="example">
+                I will study tomorrow.
+                <div class="translation">Estudiaré mañana.</div>
+              </td>
+            </tr>
+            <tr>
+              <td>Future 'be going to'</td>
+              <td class="formula">S + am/is/are + going to + V</td>
+              <td class="example">
+                She is going to travel next week.
+                <div class="translation">
+                  Ella va a viajar la próxima semana.
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Future Continuous</td>
+              <td class="formula">S + will be + V-ing</td>
+              <td class="example">
+                This time next week I'll be relaxing.
+                <div class="translation">
+                  A estas horas la próxima semana estaré relajándome.
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Future Perfect</td>
+              <td class="formula">S + will have + past participle</td>
+              <td class="example">
+                By Friday they will have finished.
+                <div class="translation">Para el viernes habrán terminado.</div>
+              </td>
+            </tr>
+            <tr>
+              <td>Future Perfect Continuous</td>
+              <td class="formula">S + will have been + V-ing</td>
+              <td class="example">
+                By June she'll have been working here five years.
+                <div class="translation">
+                  Para junio hará cinco años que trabaja aquí.
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Modal + base</td>
+              <td class="formula">S + can/could/may/must/should + V</td>
+              <td class="example">
+                You should study more.
+                <div class="translation">Deberías estudiar más.</div>
+              </td>
+            </tr>
+            <tr>
+              <td>Modal perfect</td>
+              <td class="formula">S + modal + have + past participle</td>
+              <td class="example">
+                She should have studied.
+                <div class="translation">Ella debería haber estudiado.</div>
+              </td>
+            </tr>
+          </table>
+
+          <div class="note">
+            Consejo: memoriza las
+            <strong>señales temporales</strong> (yesterday, since, for, by,
+            when, while) y practica reconocer el auxiliar o la forma -ing para
+            identificar el tiempo.
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>📘 Present — explicación y ejemplos</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Present Simple</h3>
+            <p class="formula">S + V(s/es)</p>
+            <p class="usage">
+              <strong>Cuándo usarlo:</strong> hábitos y rutinas, hechos
+              generales, horarios (timetable), instrucciones y estados
+              permanentes.
+            </p>
+            <p class="example">
+              English: <strong>I study every day.</strong><br /><span
+                class="translation"
+                >Español: Yo estudio todos los días.</span
+              >
+            </p>
+            <p class="note">
+              Se usan adverbios de frecuencia: always, usually, often,
+              sometimes, never.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Present Continuous</h3>
+            <p class="formula">S + am/is/are + V-ing</p>
+            <p class="usage">
+              <strong>Cuándo usarlo:</strong> acción en progreso en este
+              momento, acciones temporales y planes futuros ya decididos.
+            </p>
+            <p class="example">
+              English: <strong>She is studying now.</strong><br /><span
+                class="translation"
+                >Español: Ella está estudiando ahora.</span
+              >
+            </p>
+            <p class="note">
+              No se usa con verbos de estado (know, like, want) normalmente.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Present Perfect</h3>
+            <p class="formula">S + have/has + past participle</p>
+            <p class="usage">
+              <strong>Cuándo usarlo:</strong> acciones pasadas con relevancia en
+              el presente: experiencias, resultados recientes, cambios o
+              acciones con un tiempo no especificado.
+            </p>
+            <p class="example">
+              English: <strong>They have finished the test.</strong><br /><span
+                class="translation"
+                >Español: Ellos han terminado el examen.</span
+              >
+            </p>
+            <p class="note">
+              Se usan marcadores como: already, yet, just, ever, never, for,
+              since.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Present Perfect Continuous</h3>
+            <p class="formula">S + have/has + been + V-ing</p>
+            <p class="usage">
+              <strong>Cuándo usarlo:</strong> para expresar duración de una
+              acción que empezó en el pasado y continúa hasta ahora (o acaba
+              recientemente) — enfatiza la duración.
+            </p>
+            <p class="example">
+              English: <strong>We have been studying for two hours.</strong
+              ><br /><span class="translation"
+                >Español: Llevamos estudiando dos horas.</span
+              >
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>📙 Past — explicación y ejemplos</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Past Simple</h3>
+            <p class="formula">S + V(ed) / irregular</p>
+            <p class="usage">
+              <strong>Cuándo usarlo:</strong> acciones completadas en un tiempo
+              pasado concreto (con expresiones de tiempo: yesterday, last week,
+              in 2010).
+            </p>
+            <p class="example">
+              English: <strong>I watched that film yesterday.</strong
+              ><br /><span class="translation"
+                >Español: Vi esa película ayer.</span
+              >
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Past Continuous</h3>
+            <p class="formula">S + was/were + V-ing</p>
+            <p class="usage">
+              <strong>Cuándo usarlo:</strong> acción en progreso en un momento
+              pasado; se usa para describir el contexto de otra acción que
+              interrumpe.
+            </p>
+            <p class="example">
+              English: <strong>They were eating when I called.</strong
+              ><br /><span class="translation"
+                >Español: Estaban comiendo cuando llamé.</span
+              >
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Past Perfect</h3>
+            <p class="formula">S + had + past participle</p>
+            <p class="usage">
+              <strong>Cuándo usarlo:</strong> para marcar la anterioridad: algo
+              que ocurrió antes de otra acción pasada.
+            </p>
+            <p class="example">
+              English:
+              <strong>By the time we arrived, the film had started.</strong
+              ><br /><span class="translation"
+                >Español: Para cuando llegamos, la película ya había
+                empezado.</span
+              >
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Past Perfect Continuous</h3>
+            <p class="formula">S + had + been + V-ing</p>
+            <p class="usage">
+              <strong>Cuándo usarlo:</strong> enfatiza la duración de una acción
+              que ocurrió antes de otra en el pasado.
+            </p>
+            <p class="example">
+              English: <strong>He had been working all day.</strong><br /><span
+                class="translation"
+                >Español: Había estado trabajando todo el día.</span
+              >
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>📗 Future — explicación y ejemplos</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Future Simple — will</h3>
+            <p class="formula">S + will + V</p>
+            <p class="usage">
+              <strong>Cuándo usarlo:</strong> decisiones espontáneas, promesas,
+              predicciones sin evidencia directa.
+            </p>
+            <p class="example">
+              English: <strong>I'll help you with that.</strong><br /><span
+                class="translation"
+                >Español: Te ayudaré con eso.</span
+              >
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Future with 'be going to'</h3>
+            <p class="formula">S + am/is/are + going to + V</p>
+            <p class="usage">
+              <strong>Cuándo usarlo:</strong> planes decididos previamente o
+              predicciones basadas en evidencia presente.
+            </p>
+            <p class="example">
+              English: <strong>It's going to rain — look at the clouds.</strong
+              ><br /><span class="translation"
+                >Español: Va a llover — mira las nubes.</span
+              >
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Future Continuous</h3>
+            <p class="formula">S + will be + V-ing</p>
+            <p class="usage">
+              <strong>Cuándo usarlo:</strong> acción en progreso en un momento
+              futuro concreto.
+            </p>
+            <p class="example">
+              English: <strong>At 9pm I'll be watching TV.</strong><br /><span
+                class="translation"
+                >Español: A las 9pm estaré viendo la tele.</span
+              >
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Future Perfect</h3>
+            <p class="formula">S + will have + past participle</p>
+            <p class="usage">
+              <strong>Cuándo usarlo:</strong> acción que estará completada antes
+              de un momento futuro.
+            </p>
+            <p class="example">
+              English: <strong>By next year she'll have graduated.</strong
+              ><br /><span class="translation"
+                >Español: Para el año que viene ella se habrá graduado.</span
+              >
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Future Perfect Continuous</h3>
+            <p class="formula">S + will have been + V-ing</p>
+            <p class="usage">
+              <strong>Cuándo usarlo:</strong> duración hasta un punto en el
+              futuro.
+            </p>
+            <p class="example">
+              English:
+              <strong>By June, they'll have been living here two years.</strong
+              ><br /><span class="translation"
+                >Español: Para junio harán dos años que viven aquí.</span
+              >
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>⚙️ Modal verbs y formas compuestas — explicación</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Modals (can, could, may, must, should...)</h3>
+            <p class="formula">S + modal + V</p>
+            <p class="usage">
+              <strong>Cuándo usarlo:</strong> expresar habilidad, permiso,
+              obligación, consejo o probabilidad.
+            </p>
+            <p class="example">
+              English: <strong>You must wear a helmet.</strong><br /><span
+                class="translation"
+                >Español: Debes llevar casco.</span
+              >
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Modal perfect (opinión sobre el pasado)</h3>
+            <p class="formula">S + modal + have + past participle</p>
+            <p class="usage">
+              <strong>Cuándo usarlo:</strong> para criticar/interpretar acciones
+              pasadas o expresar posibilidad pasada.
+            </p>
+            <p class="example">
+              English:
+              <strong>She could have passed the exam if she'd studied.</strong
+              ><br /><span class="translation"
+                >Español: Ella podría haber aprobado el examen si hubiera
+                estudiado.</span
+              >
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>🔁 Condicionales — explicación y ejemplos (0–3)</h2>
+        <div class="card">
+          <table>
+            <tr>
+              <th>Tipo</th>
+              <th>Fórmula</th>
+              <th>Ejemplo</th>
+            </tr>
+            <tr>
+              <td>Zero (hechos generales)</td>
+              <td class="formula">If + present simple, present simple</td>
+              <td class="example">
+                If you heat water, it boils.
+                <div class="translation">Si calientas agua, hierve.</div>
+              </td>
+            </tr>
+            <tr>
+              <td>First (posible real)</td>
+              <td class="formula">If + present simple, will + V</td>
+              <td class="example">
+                If it rains, we'll cancel the trip.
+                <div class="translation">
+                  Si llueve, cancelaremos la excursión.
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Second (hipótesis presente)</td>
+              <td class="formula">If + past simple, would + V</td>
+              <td class="example">
+                If I won the lottery, I would travel the world.
+                <div class="translation">
+                  Si ganara la lotería, viajaría por el mundo.
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Third (hipótesis pasada)</td>
+              <td class="formula">
+                If + past perfect, would have + past participle
+              </td>
+              <td class="example">
+                If she'd studied, she would have passed.
+                <div class="translation">
+                  Si ella hubiera estudiado, habría aprobado.
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Mixed</td>
+              <td class="formula">
+                Combinaciones (p. ej. pasado → resultado presente)
+              </td>
+              <td class="example">
+                If he had studied medicine, he would be a doctor now.
+                <div class="translation">
+                  Si hubiera estudiado medicina, ahora sería médico.
+                </div>
+              </td>
+            </tr>
+          </table>
+
+          <div class="note">
+            Truco: mira el tiempo en la cláusula 'if' para identificar el tipo:
+            present → 0/1; past → 2; past perfect → 3.
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧩 Consejos prácticos para el examen</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Identificar por señales temporales</h3>
+            <p>
+              "yesterday/last week/ago" → pasado simple. "Since/for" →
+              perfect/continuous. "By the time" → perfect.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Errores frecuentes</h3>
+            <ul>
+              <li>
+                Confundir Past Simple con Present Perfect (I lived vs I have
+                lived).
+              </li>
+              <li>No usar "been" en perfect continuous (have been doing).</li>
+              <li>Mezclar tiempos en condicionales.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Práctica recomendada</h3>
+            <p>
+              Haz ejercicios de transformación (pasiva/activa), rellena huecos
+              con la forma correcta y traduce frases aumentando la dificultad
+              progresivamente.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        Guía mejorada — dime si quieres: ejercicios autocorregibles, una versión
+        imprimible (PDF) o más ejemplos por cada tiempo.
+      </footer>
+    </main>
+  </body>
+</html>

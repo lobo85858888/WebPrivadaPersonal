@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clases</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      }
+
+      body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #050505;
+        overflow: hidden;
+        position: relative;
+        cursor: none;
+      }
+
+      /* Linterna */
+      .luz {
+        position: fixed;
+        width: 500px;
+        height: 500px;
+        pointer-events: none;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.08),
+          transparent 70%
+        );
+        transition: background 0.3s;
+        mix-blend-mode: screen;
+      }
+
+      .cursor {
+        position: fixed;
+        width: 30px;
+        height: 30px;
+        pointer-events: none;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.6);
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        z-index: 5;
+      }
+
+      /* Tarjeta */
+      .card {
+        width: 360px;
+        padding: 60px 40px 50px;
+        border-radius: 40px;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(30px);
+        text-align: center;
+        box-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
+        position: relative;
+      }
+
+      .label {
+        font-size: 12px;
+        letter-spacing: 4px;
+        opacity: 0.4;
+        margin-bottom: 40px;
+      }
+      .numero {
+        font-size: 120px;
+        font-weight: 600;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .numero.animate {
+        transform: scale(1.08);
+        opacity: 0.8;
+      }
+      .porcentaje {
+        margin-top: 10px;
+        font-size: 14px;
+        opacity: 0.5;
+      }
+      .progress-wrapper {
+        margin-top: 40px;
+        height: 6px;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .progress {
+        height: 100%;
+        width: 0%;
+        background: white;
+        border-radius: 10px;
+        transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* BOTÓN ROJO BONITO */
+      .back-btn {
+        display: block;
+        margin: 35px auto 0;
+        padding: 16px 0;
+        width: 85%;
+        text-align: center;
+        text-decoration: none;
+        color: #fff;
+        font-weight: 700;
+        font-size: 18px;
+        border-radius: 25px;
+        background: linear-gradient(135deg, #ef4444, #f87171);
+        box-shadow: 0 8px 25px rgba(239, 68, 68, 0.45);
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .back-btn:hover {
+        transform: translateY(-3px);
+        background: linear-gradient(135deg, #f87171, #ef4444);
+        box-shadow: 0 12px 35px rgba(239, 68, 68, 0.6);
+      }
+
+      .back-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.15);
+        transform: skewX(-20deg);
+        transition: all 0.5s ease;
+      }
+
+      .back-btn:hover::before {
+        left: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="luz" id="luz"></div>
+    <div class="cursor" id="cursor"></div>
+
+    <div class="card">
+      <div class="label">DÍAS DE CLASE</div>
+      <div class="numero" id="dias">40</div>
+      <div class="porcentaje" id="porcentaje">0%</div>
+      <div class="progress-wrapper">
+        <div class="progress" id="barra"></div>
+      </div>
+
+      <!-- Botón Rojo Bonito -->
+      <a href="../index.html" class="back-btn">🛑 ATRÁS 🛑</a>
+    </div>
+
+    <script>
+      const TOTAL_DIAS = 40;
+      const diasClase = [
+        "2026-03-02",
+        "2026-03-03",
+        "2026-03-04",
+        "2026-03-05",
+        "2026-03-06",
+        "2026-03-09",
+        "2026-03-10",
+        "2026-03-11",
+        "2026-03-12",
+        "2026-03-13",
+        "2026-03-16",
+        "2026-03-17",
+        "2026-03-18",
+        "2026-03-23",
+        "2026-03-24",
+        "2026-03-25",
+        "2026-03-26",
+        "2026-03-27",
+        "2026-04-13",
+        "2026-04-14",
+        "2026-04-15",
+        "2026-04-16",
+        "2026-04-17",
+        "2026-04-20",
+        "2026-04-21",
+        "2026-04-22",
+        "2026-04-23",
+        "2026-04-24",
+        "2026-04-27",
+        "2026-04-28",
+        "2026-04-29",
+        "2026-04-30",
+        "2026-05-04",
+        "2026-05-05",
+        "2026-05-06",
+        "2026-05-07",
+        "2026-05-08",
+        "2026-05-11",
+        "2026-05-12",
+        "2026-05-13",
+      ];
+
+      let ultimoValor = null;
+
+      function calcularRestantes() {
+        const ahora = new Date();
+        let restantes = 0;
+        diasClase.forEach((fecha) => {
+          const momento = new Date(fecha + "T15:15:00");
+          if (ahora < momento) restantes++;
+        });
+        return restantes;
+      }
+
+      function actualizar() {
+        const restantes = calcularRestantes();
+        const completado = TOTAL_DIAS - restantes;
+        const porcentaje = (completado / TOTAL_DIAS) * 100;
+
+        const numero = document.getElementById("dias");
+        if (ultimoValor !== restantes) {
+          numero.classList.add("animate");
+          setTimeout(() => numero.classList.remove("animate"), 400);
+          ultimoValor = restantes;
+        }
+        numero.textContent = restantes;
+        document.getElementById("porcentaje").textContent =
+          porcentaje.toFixed(0) + "%";
+        document.getElementById("barra").style.width = porcentaje + "%";
+
+        // Fondo dinámico
+        const luzFondo = 5 + porcentaje * 0.4;
+        document.body.style.background = `hsl(200,30%,${luzFondo}%)`;
+
+        // Linterna suave
+        const intensidad = 0.05 + (porcentaje / 100) * 0.15;
+        document.getElementById("luz").style.background =
+          `radial-gradient(circle, rgba(255,255,255,${intensidad}), transparent 70%)`;
+      }
+
+      actualizar();
+      setInterval(actualizar, 60000);
+
+      document.addEventListener("mousemove", (e) => {
+        const luz = document.getElementById("luz");
+        const cursor = document.getElementById("cursor");
+        luz.style.left = e.clientX - 250 + "px";
+        luz.style.top = e.clientY - 250 + "px";
+        cursor.style.left = e.clientX - 15 + "px";
+        cursor.style.top = e.clientY - 15 + "px";
+      });
+    </script>
+  </body>
+</html>

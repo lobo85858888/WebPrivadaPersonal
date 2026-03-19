@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Calculadora de Hipoteca</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family:
+          "Plus Jakarta Sans",
+          system-ui,
+          -apple-system,
+          sans-serif;
+        cursor: default;
+        transition: all 0.25s ease;
+      }
+
+      body {
+        background: linear-gradient(135deg, #0f172a, #020617);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        color: white;
+        overflow: hidden;
+      }
+
+      .container {
+        background: #0f172a;
+        padding: 32px;
+        border-radius: 16px;
+        width: 430px;
+        max-width: 90vw;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+      }
+
+      .container:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.7);
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 25px;
+        font-weight: 600;
+        letter-spacing: 1px;
+      }
+
+      label {
+        display: block;
+        margin-top: 16px;
+        margin-bottom: 6px;
+        font-size: 14px;
+        opacity: 0.8;
+      }
+
+      input,
+      button {
+        width: 100%;
+        height: 44px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        font-size: 15px;
+      }
+
+      input {
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: #020617;
+        color: white;
+        transition: all 0.2s;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.6);
+      }
+
+      input:focus {
+        outline: none;
+        border-color: #22c55e;
+        box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.3);
+        background: #0f172a;
+      }
+
+      button {
+        margin-top: 18px;
+        border: none;
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+        color: white;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.25s;
+        box-shadow: 0 5px 15px rgba(34, 197, 94, 0.45);
+        border-radius: 12px;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(34, 197, 94, 0.6);
+      }
+
+      button:active {
+        transform: translateY(0);
+        box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3);
+      }
+
+      .results {
+        margin-top: 24px;
+        background: #020617;
+        padding: 18px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        animation: fade 0.4s ease;
+      }
+
+      .result {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0;
+        font-size: 15px;
+      }
+
+      .result:not(:last-child) {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .big {
+        font-size: 26px;
+        color: #22c55e;
+        font-weight: 700;
+      }
+
+      /* BOTÓN ATRÁS ROJO */
+      .back-btn {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        margin-top: 18px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #ef4444, #b91c1c);
+        color: white;
+        font-size: 16px;
+        font-weight: 700;
+        text-align: center;
+        text-decoration: none;
+        box-shadow: 0 5px 15px rgba(239, 68, 68, 0.45);
+        transition: all 0.3s;
+      }
+
+      .back-btn:hover {
+        transform: translateY(-2px);
+        box-shadow:
+          0 8px 25px rgba(239, 68, 68, 0.65),
+          0 0 12px rgba(239, 68, 68, 0.35);
+      }
+
+      @keyframes fade {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Calculadora de Hipoteca</h1>
+
+      <label>Precio de la vivienda (€)</label>
+      <input id="precio" type="number" value="150000" />
+
+      <label>Entrada (€)</label>
+      <input id="entrada" type="number" value="80000" />
+
+      <label>Interés anual (%)</label>
+      <input id="interes" type="number" value="3" />
+
+      <label>Años</label>
+      <input id="anos" type="number" value="10" />
+
+      <button onclick="calcular()">Calcular</button>
+
+      <div class="results">
+        <div class="result">
+          <span>Dinero que te presta el banco</span>
+          <span id="prestamo">€0</span>
+        </div>
+
+        <div class="result">
+          <span>Cuota mensual</span>
+          <span class="big" id="cuota">€0</span>
+        </div>
+
+        <div class="result">
+          <span>Total pagado al banco</span>
+          <span id="total">€0</span>
+        </div>
+
+        <div class="result">
+          <span>Total intereses</span>
+          <span id="intereses">€0</span>
+        </div>
+      </div>
+
+      <!-- BOTÓN ATRÁS ROJO -->
+      <a href="index.html" class="back-btn">Atrás</a>
+    </div>
+
+    <script>
+      function calcular() {
+        let precio = Number(document.getElementById("precio").value);
+        let entrada = Number(document.getElementById("entrada").value);
+        let interes =
+          Number(document.getElementById("interes").value) / 100 / 12;
+        let anos = Number(document.getElementById("anos").value);
+
+        let prestamo = precio - entrada;
+        let pagos = anos * 12;
+
+        let cuota =
+          (prestamo * (interes * Math.pow(1 + interes, pagos))) /
+          (Math.pow(1 + interes, pagos) - 1);
+
+        let total = cuota * pagos;
+        let intereses = total - prestamo;
+
+        document.getElementById("prestamo").innerText =
+          "€" + prestamo.toLocaleString();
+        document.getElementById("cuota").innerText = "€" + cuota.toFixed(2);
+        document.getElementById("total").innerText = "€" + total.toFixed(2);
+        document.getElementById("intereses").innerText =
+          "€" + intereses.toFixed(2);
+      }
+
+      calcular();
+    </script>
+  </body>
+</html>

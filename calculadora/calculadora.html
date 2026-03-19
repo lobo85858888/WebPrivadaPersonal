@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Calculadora S&P 500</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family:
+          "Plus Jakarta Sans",
+          system-ui,
+          -apple-system,
+          sans-serif;
+        cursor: default;
+        transition: all 0.25s ease;
+      }
+
+      body {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #0f172a, #020617);
+        color: white;
+        overflow: hidden;
+      }
+
+      .container {
+        width: 430px;
+        max-width: 90vw;
+        background: #0f172a;
+        border-radius: 18px;
+        padding: 32px;
+        box-shadow:
+          0 15px 40px rgba(0, 0, 0, 0.65),
+          inset 0 1px 2px rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+      }
+
+      .container:hover {
+        transform: translateY(-3px);
+        box-shadow:
+          0 20px 60px rgba(0, 0, 0, 0.7),
+          inset 0 1px 2px rgba(255, 255, 255, 0.03);
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 28px;
+        font-size: 24px;
+        letter-spacing: 1px;
+        font-weight: 700;
+      }
+
+      .field {
+        margin-bottom: 18px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 14px;
+        opacity: 0.85;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 12px;
+        font-size: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: #020617;
+        color: white;
+        outline: none;
+        box-shadow:
+          inset 0 2px 6px rgba(0, 0, 0, 0.75),
+          inset 0 -2px 6px rgba(255, 255, 255, 0.04);
+        transition: all 0.3s;
+      }
+
+      input:focus,
+      select:focus {
+        border-color: #22c55e;
+        box-shadow:
+          0 0 12px rgba(34, 197, 94, 0.45),
+          inset 0 2px 6px rgba(0, 0, 0, 0.75),
+          inset 0 -2px 6px rgba(255, 255, 255, 0.04);
+        background: #0f172a;
+      }
+
+      button {
+        width: 100%;
+        padding: 14px;
+        margin-top: 12px;
+        border: none;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+        color: white;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 5px 15px rgba(34, 197, 94, 0.45);
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow:
+          0 8px 25px rgba(34, 197, 94, 0.65),
+          0 0 12px rgba(34, 197, 94, 0.35);
+      }
+
+      .results {
+        margin-top: 24px;
+        background: #020617;
+        padding: 20px;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+        animation: fadeIn 0.5s ease;
+      }
+
+      .result-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        font-size: 15px;
+        padding: 6px 0;
+        transition: all 0.25s;
+      }
+
+      .result-item:hover {
+        background: rgba(34, 197, 94, 0.05);
+        border-radius: 8px;
+      }
+
+      .result-item span {
+        opacity: 0.85;
+      }
+
+      .value {
+        font-weight: 700;
+        color: #22c55e;
+        font-size: 16px;
+      }
+
+      /* BOTON ATRÁS */
+      .back-btn {
+        display: block;
+        width: 100%;
+        padding: 14px;
+        margin-top: 16px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #ef4444, #b91c1c);
+        color: white;
+        font-size: 16px;
+        font-weight: 700;
+        text-align: center;
+        text-decoration: none;
+        box-shadow: 0 5px 15px rgba(239, 68, 68, 0.45);
+        transition: all 0.3s;
+      }
+
+      .back-btn:hover {
+        transform: translateY(-2px);
+        box-shadow:
+          0 8px 25px rgba(239, 68, 68, 0.65),
+          0 0 12px rgba(239, 68, 68, 0.35);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Calculadora S&P 500</h1>
+
+      <div class="field">
+        <label>Capital inicial (€)</label>
+        <input type="number" id="capital" value="1000" />
+      </div>
+
+      <div class="field">
+        <label>Aporte periódico (€)</label>
+        <input type="number" id="aporte" value="200" />
+      </div>
+
+      <div class="field">
+        <label>Frecuencia</label>
+        <select id="frecuencia">
+          <option value="12">Mensual</option>
+          <option value="1">Anual</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Interés anual (%)</label>
+        <input type="number" id="interes" value="10" />
+      </div>
+
+      <div class="field">
+        <label>Años de inversión</label>
+        <input type="number" id="anos" value="20" />
+      </div>
+
+      <button onclick="calcular()">Calcular inversión</button>
+
+      <div class="results">
+        <div class="result-item">
+          <span>Valor final</span>
+          <div class="value" id="valorFinal">€0</div>
+        </div>
+
+        <div class="result-item">
+          <span>Total invertido</span>
+          <div id="invertido">€0</div>
+        </div>
+
+        <div class="result-item">
+          <span>Ganancia</span>
+          <div id="ganancia">€0</div>
+        </div>
+      </div>
+
+      <!-- BOTÓN ATRÁS -->
+      <a href="index.html" class="back-btn">Atrás</a>
+    </div>
+
+    <script>
+      function calcular() {
+        let capital = parseFloat(document.getElementById("capital").value);
+        let aporte = parseFloat(document.getElementById("aporte").value);
+        let interes =
+          parseFloat(document.getElementById("interes").value) / 100;
+        let anos = parseFloat(document.getElementById("anos").value);
+        let frecuencia = parseInt(document.getElementById("frecuencia").value);
+
+        let periodos = anos * frecuencia;
+        let interesPeriodo = interes / frecuencia;
+
+        let total = capital;
+        let invertido = capital;
+
+        for (let i = 0; i < periodos; i++) {
+          total = total * (1 + interesPeriodo);
+          total += aporte;
+          invertido += aporte;
+        }
+
+        let ganancia = total - invertido;
+
+        document.getElementById("valorFinal").innerText =
+          "€" + total.toLocaleString(undefined, { maximumFractionDigits: 2 });
+        document.getElementById("invertido").innerText =
+          "€" +
+          invertido.toLocaleString(undefined, { maximumFractionDigits: 2 });
+        document.getElementById("ganancia").innerText =
+          "€" +
+          ganancia.toLocaleString(undefined, { maximumFractionDigits: 2 });
+      }
+
+      calcular();
+    </script>
+  </body>
+</html>

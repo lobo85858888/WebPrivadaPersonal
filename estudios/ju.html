@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="ip.js"></script>
+
+    <title>Guía DEFINITIVA – Pasiva, Causative y Relative Clauses</title>
+
+    <style>
+      :root {
+        --blue: #2563eb;
+        --green: #059669;
+        --orange: #ea580c;
+        --red: #dc2626;
+        --bg: #f1f5f9;
+        --card: #ffffff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family:
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        background: var(--bg);
+        color: #1f2933;
+        line-height: 1.7;
+      }
+
+      header {
+        background: linear-gradient(135deg, var(--blue), #1e40af);
+        color: white;
+        padding: 40px 20px;
+        text-align: center;
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: clamp(1.8rem, 4vw, 2.8rem);
+      }
+
+      header p {
+        opacity: 0.9;
+        max-width: 800px;
+        margin: 15px auto 0;
+      }
+
+      main {
+        max-width: 1200px;
+        margin: auto;
+        padding: 20px;
+      }
+
+      section {
+        margin-top: 50px;
+      }
+
+      section h2 {
+        color: var(--blue);
+        border-left: 6px solid var(--blue);
+        padding-left: 12px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+      }
+
+      .card {
+        background: var(--card);
+        padding: 20px;
+        border-radius: 14px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      }
+
+      .card h3 {
+        margin-top: 0;
+        color: var(--green);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        font-size: 0.95rem;
+      }
+
+      th,
+      td {
+        border: 1px solid #e5e7eb;
+        padding: 10px;
+        vertical-align: top;
+      }
+
+      th {
+        background: var(--blue);
+        color: white;
+      }
+
+      tr:nth-child(even) {
+        background: #f8fafc;
+      }
+
+      .formula {
+        font-weight: bold;
+        color: var(--red);
+      }
+
+      .example {
+        color: var(--green);
+        font-weight: 500;
+      }
+
+      .warning {
+        background: #fee2e2;
+        border-left: 6px solid var(--red);
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 15px;
+      }
+
+      .tip {
+        background: #ecfeff;
+        border-left: 6px solid #06b6d4;
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 15px;
+      }
+
+      footer {
+        margin-top: 60px;
+        padding: 30px;
+        text-align: center;
+        font-size: 0.9rem;
+        color: #475569;
+      }
+
+      @media (max-width: 600px) {
+        table {
+          font-size: 0.85rem;
+        }
+      }
+      a {
+        color: rgb(255, 255, 255);
+        background-image: linear-gradient(
+          to bottom,
+          transparent 50%,
+          #fcf113 0
+        );
+        background-size: 0% 100%;
+        background-repeat: no-repeat;
+        text-decoration: none;
+        transition: background-size 1s ease;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>📘 Guía DEFINITIVA de Gramática Inglesa</h1>
+      <p>
+        VOZ PASIVA · CAUSATIVE · RELATIVE CLAUSES <br />
+        <strong
+          >2º Bachillerato / EBAU — TODO lo que entra, sin excepción</strong
+        >
+      </p>
+      <a href="index.html"> ATRAS </a>
+    </header>
+
+    <main>
+      <!-- PASIVA -->
+      <section>
+        <h2>🔵 VOZ PASIVA — ABSOLUTAMENTE TODO</h2>
+
+        <div class="grid">
+          <div class="card">
+            <h3>📌 Estructura base</h3>
+            <p>
+              <strong>Activa:</strong> Subject + Verb + Object<br />
+              <strong>Pasiva:</strong> Object → Subject +
+              <span class="formula">BE</span> +
+              <span class="formula">Past Participle</span>
+            </p>
+            <p class="tip">
+              👉 El tiempo verbal SIEMPRE lo marca el verbo <strong>BE</strong>.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>📌 ¿Cuándo se usa?</h3>
+            <ul>
+              <li>Cuando el agente no importa</li>
+              <li>Cuando no se sabe quién hace la acción</li>
+              <li>Textos formales (noticias, ciencia, exámenes)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>🕒 Pasiva por tiempos verbales (COMPLETA)</h3>
+          <table>
+            <tr>
+              <th>Tiempo</th>
+              <th>Ejemplo activo</th>
+              <th>Pasiva correcta</th>
+            </tr>
+            <tr>
+              <td>Present Simple</td>
+              <td>They clean the streets</td>
+              <td class="example">The streets are cleaned</td>
+            </tr>
+            <tr>
+              <td>Past Simple</td>
+              <td>They cleaned the streets</td>
+              <td class="example">The streets were cleaned</td>
+            </tr>
+            <tr>
+              <td>Present Continuous</td>
+              <td>They are building a bridge</td>
+              <td class="example">A bridge is being built</td>
+            </tr>
+            <tr>
+              <td>Past Continuous</td>
+              <td>They were building a bridge</td>
+              <td class="example">A bridge was being built</td>
+            </tr>
+            <tr>
+              <td>Present Perfect</td>
+              <td>They have fixed the car</td>
+              <td class="example">The car has been fixed</td>
+            </tr>
+            <tr>
+              <td>Past Perfect</td>
+              <td>They had fixed the car</td>
+              <td class="example">The car had been fixed</td>
+            </tr>
+            <tr>
+              <td>Future (will)</td>
+              <td>They will announce the results</td>
+              <td class="example">The results will be announced</td>
+            </tr>
+            <tr>
+              <td>Conditional</td>
+              <td>They would solve the issue</td>
+              <td class="example">The issue would be solved</td>
+            </tr>
+            <tr>
+              <td>Modal verbs</td>
+              <td>They must finish the work</td>
+              <td class="example">The work must be finished</td>
+            </tr>
+            <tr>
+              <td>Modal perfect</td>
+              <td>They should have warned us</td>
+              <td class="example">We should have been warned</td>
+            </tr>
+          </table>
+
+          <div class="warning">
+            ❌ <strong>NO se usa pasiva con Present Perfect Continuous</strong
+            ><br />
+            (They have been repairing… → NO natural en pasiva)
+          </div>
+        </div>
+      </section>
+
+      <!-- CAUSATIVE -->
+      <section>
+        <h2>🟠 CAUSATIVE — HAVE / GET SOMETHING DONE</h2>
+
+        <div class="grid">
+          <div class="card">
+            <h3>🕒 Causative por tiempos verbales (COMPLETA)</h3>
+            <table>
+              <tr>
+                <th>Tiempo</th>
+                <th>Ejemplo activo</th>
+                <th>Causative correcto</th>
+              </tr>
+              <tr>
+                <td>Present Simple</td>
+                <td>The mechanic fixes my car</td>
+                <td>I have my car fixed</td>
+              </tr>
+              <tr>
+                <td>Present Continuous</td>
+                <td>The mechanic is fixing my car</td>
+                <td>I am having my car fixed</td>
+              </tr>
+              <tr>
+                <td>Past Simple</td>
+                <td>The mechanic fixed my car</td>
+                <td>I had my car fixed</td>
+              </tr>
+              <tr>
+                <td>Past Continuous</td>
+                <td>The mechanic was fixing my car</td>
+                <td>I was having my car fixed</td>
+              </tr>
+              <tr>
+                <td>Present Perfect</td>
+                <td>The mechanic has fixed my car</td>
+                <td>I have had my car fixed</td>
+              </tr>
+              <tr>
+                <td>Past Perfect</td>
+                <td>The mechanic had fixed my car</td>
+                <td>I had had my car fixed</td>
+              </tr>
+              <tr>
+                <td>Future (will)</td>
+                <td>The mechanic will fix my car</td>
+                <td>I will have my car fixed</td>
+              </tr>
+              <tr>
+                <td>Conditional</td>
+                <td>The mechanic would fix my car</td>
+                <td>I would have my car fixed</td>
+              </tr>
+              <tr>
+                <td>Modal verbs</td>
+                <td>The mechanic must fix my car</td>
+                <td>I must have my car fixed</td>
+              </tr>
+              <tr>
+                <td>Modal perfect</td>
+                <td>The mechanic should have fixed my car</td>
+                <td>I should have had my car fixed</td>
+              </tr>
+            </table>
+
+            <div class="warning">
+              ❌ <strong>Importante:</strong> En presente perfecto continuo y
+              pasado perfecto continuo no se usa causative naturalmente.<br />
+              Ejemplo incorrecto: I have been having my car fixed ❌
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RELATIVE -->
+      <section>
+        <h2>🟢 RELATIVE CLAUSES — TODO LO QUE CAE</h2>
+
+        <div class="card">
+          <h3>📌 Pronombres</h3>
+          <table>
+            <tr>
+              <th>Pronombre</th>
+              <th>Uso</th>
+              <th>Ejemplo</th>
+            </tr>
+            <tr>
+              <td>who</td>
+              <td>Personas</td>
+              <td class="example">The man who lives here</td>
+            </tr>
+            <tr>
+              <td>which</td>
+              <td>Cosas (non-restrictive)</td>
+              <td class="example">My car, which is new, is electric</td>
+            </tr>
+            <tr>
+              <td>that</td>
+              <td>Personas o cosas (restrictive)</td>
+              <td class="example">The exam that we did</td>
+            </tr>
+            <tr>
+              <td>whose</td>
+              <td>Posesión</td>
+              <td class="example">The boy whose bike was stolen</td>
+            </tr>
+            <tr>
+              <td>where</td>
+              <td>Lugar</td>
+              <td class="example">The city where I live</td>
+            </tr>
+            <tr>
+              <td>when</td>
+              <td>Tiempo</td>
+              <td class="example">The day when we met</td>
+            </tr>
+          </table>
+
+          <div class="tip">
+            🧠 <strong>Regla de oro:</strong><br />
+            ¿La información es necesaria?<br />
+            ✔️ Sí → THAT<br />
+            ❌ No → COMAS + WHICH / WHO
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      Guía creada para 2º Bachillerato · Nivel EBAU · Diseño responsive
+    </footer>
+  </body>
+</html>
