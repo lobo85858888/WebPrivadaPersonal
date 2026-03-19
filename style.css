@@ -1,48 +1,192 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
-/* Activar View Transitions automáticas */
+/* =============================== */
+/*      RESET Y TIPOGRAFÍA         */
+/* =============================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background: #141414;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* =============================== */
+/*       VIEW TRANSITIONS           */
+/* =============================== */
 @view-transition {
   navigation: auto;
 }
 
-/* Duración por defecto */
 ::view-transition-group(*) {
-  animation-duration: 0.5s;
-  animation-timing-function: ease-in-out;
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
 }
 
-/* Salida de página */
 ::view-transition-old(*) {
-  animation-name: slide-out-to-left;
+  animation-name: slide-out-to-left, fade-out;
 }
 
-/* Entrada de página */
 ::view-transition-new(*) {
-  animation-name: slide-in-from-right;
+  animation-name: slide-in-from-right, fade-in;
 }
 
-/* Animaciones */
+/* Animaciones de entrada/salida */
 @keyframes slide-out-to-left {
-  from {
-    transform: translateX(0);
+  0% {
+    transform: translateX(0) scale(1);
     opacity: 1;
+    filter: blur(0px);
   }
-  to {
-    transform: translateX(-50px);
+  100% {
+    transform: translateX(-80px) scale(0.95);
     opacity: 0;
+    filter: blur(2px);
   }
 }
 
 @keyframes slide-in-from-right {
-  from {
-    transform: translateX(50px);
+  0% {
+    transform: translateX(80px) scale(1.05);
+    opacity: 0;
+    filter: blur(2px);
+  }
+  100% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+
+@keyframes fade-in {
+  0% {
     opacity: 0;
   }
-  to {
-    transform: translateX(0);
+  100% {
     opacity: 1;
   }
 }
 
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* =============================== */
+/*       CONTENEDORES PRINCIPALES  */
+/* =============================== */
+.container {
+  width: 90%;
+  max-width: 1400px;
+  margin: auto;
+  padding: 2rem 0;
+}
+
+/* =============================== */
+/*      CARDS ESTILO NETFLIX        */
+/* =============================== */
+.card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #1f1f1f, #252525);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.card img {
+  width: 100%;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8);
+}
+
+.card:hover img {
+  transform: scale(1.1);
+}
+
+/* =============================== */
+/*          TIPOGRAFÍA              */
+/* =============================== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+}
+
+p {
+  font-weight: 400;
+  line-height: 1.6;
+  color: #ccc;
+}
+
+/* =============================== */
+/*           BOTONES                */
+/* =============================== */
+.button {
+  display: inline-block;
+  background: #e50914;
+  color: #fff;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition:
+    background 0.3s ease,
+    transform 0.2s ease;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: #f6121d;
+  transform: scale(1.05);
+}
+
+/* =============================== */
+/*          EFECTO GRADIENT         */
+/* =============================== */
+.gradient-bg {
+  background: linear-gradient(
+    90deg,
+    rgba(229, 9, 20, 0.8),
+    rgba(20, 20, 20, 0.8)
+  );
+}
+
+/* =============================== */
+/*      STAGGER ELEMENTS            */
+/* =============================== */
+::view-transition-new(*) > * {
+  animation-delay: calc(var(--index, 0) * 0.05s);
+  animation-fill-mode: both;
+}
+
+/* =============================== */
+/*       SCROLL SUAVE               */
+/* =============================== */
+html {
+  scroll-behavior: smooth;
+}
 :root {
   --bg: #07080d;
   --panel: rgba(15, 18, 28, 0.68);
