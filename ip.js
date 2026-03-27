@@ -86,18 +86,18 @@
     const statusEl = document.getElementById("status");
 
     const name = (document.getElementById("name").value.trim() || "Anónimo").slice(0, 80);
-    const reason = (document.getElementById("reason").value.trim() || "Sin motivo").slice(0, 1400);
+    const reason = (document.getElementById("reason").value.trim() || "Sin motivo especificado").slice(0, 1400);
 
     btn.disabled = true;
     statusEl.style.color = "#aaa";
-    statusEl.textContent = "Enviando...";
+    statusEl.textContent = "Enviando solicitud...";
 
-    console.log("Enviando payload con IP:", currentIP);
+    console.log("Enviando a Discord → Nombre:", name, "| IP:", currentIP, "| Motivo:", reason);
 
     try {
       const payload = {
         username: "Solicitud de Acceso",
-        content: `**Nueva solicitud de acceso**\n\n**Nombre:** ${name}\n**IP:** ${currentIP}\n**Motivo:** ${reason}\n\nDesde: ${location.hostname}`
+        content: `**Nueva solicitud**\n\n**Nombre:** ${name}\n**IP:** ${currentIP}\n**Motivo:** ${reason}\n\nDesde: ${location.hostname}`
       };
 
       await fetch(CONFIG.WEBHOOK, {
@@ -109,19 +109,19 @@
       });
 
       statusEl.style.color = "#4ade80";
-      statusEl.innerHTML = "✅ Solicitud enviada (puede tardar unos segundos en llegar a Discord)";
+      statusEl.innerHTML = "✅ Solicitud enviada.<br>Revisa tu Discord (puede tardar unos segundos).";
       btn.textContent = "✓ Enviado";
 
-      console.log("Petición enviada (esperamos que Discord la acepte)");
     } catch (err) {
-      console.error("Error fetch:", err);
+      console.error("Error en fetch:", err);
       statusEl.style.color = "#f87171";
-      statusEl.textContent = "❌ Error al enviar. Revisa consola.";
+      statusEl.textContent = "❌ Falló el envío. Revisa la consola.";
     } finally {
       isSending = false;
     }
   }
 
+  // Verificación de IP
   async function checkAccess() {
     try {
       const controller = new AbortController();
@@ -129,7 +129,6 @@
 
       const res = await fetch(CONFIG.IP_API, { signal: controller.signal, cache: "no-store" });
       clearTimeout(timeout);
-
       const data = await res.json();
       currentIP = data.ip || data.query || "Desconocida";
 
@@ -137,7 +136,7 @@
         renderBlockedScreen(currentIP, "IP no permitida");
       }
     } catch (err) {
-      console.warn("Error IP:", err);
+      console.warn("Error verificando IP:", err);
       renderBlockedScreen("Desconocida", "Error al verificar IP");
     }
   }
