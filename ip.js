@@ -3,17 +3,15 @@
 
   const CONFIG = {
     ALLOWED_IP: "62.99.106.69",
-    IP_API: "https://api.ipify.org?format=json",        // Fiable y simple
-    // Alternativas: "https://api.ipapi.is/json" o "https://ipinfo.io/json"
-    WEBHOOK: "https://discord.com/api/webhooks/...",
-    TIMEOUT_MS: 5000,
-    MAX_REASON_LENGTH: 2000,
-    MAX_NAME_LENGTH: 100
+    IP_API: "https://api.ipify.org?format=json",
+    WEBHOOK: "https://discord.com/api/webhooks/1459251137386516584/IdR-wExor-ezEQ88YxRJM-v5NS43WtAqJP-Q6bDv0XnOSYD47bzhh2pxSIW_TIBMcRoR",  // ← Pega aquí tu webhook completo
+    TIMEOUT_MS: 8000,
+    MAX_NAME_LENGTH: 100,
+    MAX_REASON_LENGTH: 1800   // un poco menos de 2000 para evitar límites de Discord
   };
 
   const state = { sending: false };
 
-  // Escapado seguro contra XSS
   function escapeHTML(str = "") {
     return String(str)
       .replaceAll("&", "&amp;")
@@ -23,7 +21,6 @@
       .replaceAll("'", "&#039;");
   }
 
-  // Renderizar pantalla de acceso denegado (altamente responsive)
   function renderBlockedScreen(ip = "Desconocida", reason = "Acceso no autorizado") {
     document.documentElement.innerHTML = `
       <!DOCTYPE html>
@@ -34,82 +31,48 @@
         <title>Acceso Restringido</title>
         <style>
           @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
-          * { margin: 0; padding: 0; box-sizing: border-box; }
-          
+          * { margin:0; padding:0; box-sizing:border-box; }
           body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            font-family: 'Inter', system-ui, sans-serif;
             min-height: 100vh;
-            background: linear-gradient(135deg, #0a0a0f 0%, #12121a 100%);
+            background: linear-gradient(135deg, #0a0a0f, #12121a);
             color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
-            line-height: 1.6;
           }
-
           .container {
             width: 100%;
             max-width: 860px;
             background: #16161f;
             border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 25px 70px rgba(0,0,0,0.85);
             border: 1px solid #222;
           }
-
-          .main-content {
+          .main {
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
           }
-
-          .left-panel {
-            flex: 1.35;
-            padding: 52px 48px;
-            border-right: 1px solid #222;
+          .left {
+            padding: 50px 45px;
             background: #1a1a24;
+            border-bottom: 1px solid #222;
           }
-
-          .right-panel {
-            flex: 1;
-            padding: 52px 48px;
-            background: #16161f;
+          .right {
+            padding: 50px 45px;
           }
-
-          h1 {
-            font-size: clamp(3.5rem, 8vw, 5.5rem);
-            font-weight: 700;
-            color: #e50914;
-            line-height: 1;
-            margin-bottom: 12px;
-          }
-
-          h2 {
-            font-size: 1.75rem;
-            margin-bottom: 20px;
-            font-weight: 600;
-          }
-
-          p {
-            color: #bbb;
-            margin-bottom: 28px;
-            font-size: 1.05rem;
-          }
-
-          .info-box {
+          h1 { font-size: clamp(3.8rem, 9vw, 6rem); color: #e50914; line-height: 1; margin-bottom: 10px; }
+          h2 { font-size: 1.8rem; margin-bottom: 20px; }
+          p { color: #bbb; margin-bottom: 25px; }
+          .info {
             background: #21212b;
             padding: 16px 18px;
             border-radius: 12px;
             margin-bottom: 14px;
-            font-size: 0.97rem;
             border-left: 4px solid #e50914;
           }
-
-          .form-group {
-            margin-bottom: 18px;
-          }
-
           input, textarea {
             width: 100%;
             padding: 16px 18px;
@@ -117,97 +80,52 @@
             border: 1px solid #333;
             border-radius: 12px;
             color: #fff;
-            font-size: 1.02rem;
-            transition: all 0.2s;
+            font-size: 1.05rem;
+            margin-bottom: 18px;
           }
-
+          textarea { min-height: 130px; resize: vertical; }
           input:focus, textarea:focus {
-            outline: none;
             border-color: #e50914;
-            box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.15);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(229,9,20,0.2);
           }
-
-          textarea {
-            min-height: 120px;
-            resize: vertical;
-          }
-
           button {
             width: 100%;
             background: #e50914;
             color: white;
             border: none;
-            padding: 16px;
+            padding: 17px;
             font-size: 1.1rem;
             font-weight: 700;
             border-radius: 12px;
             cursor: pointer;
-            transition: all 0.25s;
-            margin-top: 8px;
+            transition: 0.3s;
           }
-
-          button:hover:not(:disabled) {
-            background: #f11f2c;
-            transform: translateY(-2px);
-          }
-
-          button:disabled {
-            background: #555;
-            cursor: not-allowed;
-            transform: none;
-          }
-
-          #status {
-            margin-top: 16px;
-            font-size: 1rem;
-            min-height: 1.4em;
-            text-align: center;
-          }
-
-          @media (max-width: 768px) {
-            .main-content {
-              flex-direction: column;
-            }
-            .left-panel {
-              border-right: none;
-              border-bottom: 1px solid #222;
-            }
-            .left-panel, .right-panel {
-              padding: 40px 28px;
-            }
+          button:hover:not(:disabled) { background: #f11f2c; transform: translateY(-2px); }
+          button:disabled { background: #555; cursor: not-allowed; }
+          #status { margin-top: 18px; font-size: 1.02rem; text-align: center; min-height: 1.5em; }
+          @media (min-width: 769px) {
+            .main { flex-direction: row; }
+            .left { border-bottom: none; border-right: 1px solid #222; flex: 1.35; }
+            .right { flex: 1; }
           }
         </style>
       </head>
       <body>
         <div class="container">
-          <div class="main-content">
-            <!-- Panel izquierdo -->
-            <div class="left-panel">
+          <div class="main">
+            <div class="left">
               <h1>403</h1>
               <h2>Acceso Restringido</h2>
-              <p>No tienes autorización para ver este contenido.</p>
-              
-              <div class="info-box">
-                <strong>Tu IP:</strong> ${escapeHTML(ip)}
-              </div>
-              <div class="info-box">
-                <strong>Motivo:</strong> ${escapeHTML(reason)}
-              </div>
+              <p>No estás autorizado para ver este contenido.</p>
+              <div class="info"><strong>Tu IP:</strong> ${escapeHTML(ip)}</div>
+              <div class="info"><strong>Motivo:</strong> ${escapeHTML(reason)}</div>
             </div>
-
-            <!-- Panel derecho - Formulario -->
-            <div class="right-panel">
+            <div class="right">
               <h2>Solicitar acceso</h2>
-              <p style="color:#aaa; margin-bottom:24px;">Si crees que deberías tener acceso, envía una solicitud.</p>
-              
-              <div class="form-group">
-                <input id="name" type="text" placeholder="Nombre o usuario" maxlength="${CONFIG.MAX_NAME_LENGTH}" autocomplete="name">
-              </div>
-              
-              <div class="form-group">
-                <textarea id="reason" placeholder="¿Por qué necesitas acceso? (máx. ${CONFIG.MAX_REASON_LENGTH} caracteres)" maxlength="${CONFIG.MAX_REASON_LENGTH}"></textarea>
-              </div>
-              
+              <p style="color:#aaa;">Si crees que deberías tener acceso, completa el formulario.</p>
+              <input id="name" type="text" placeholder="Nombre o usuario" maxlength="${CONFIG.MAX_NAME_LENGTH}">
+              <textarea id="reason" placeholder="¿Por qué necesitas acceso?"></textarea>
               <button id="sendBtn">Enviar solicitud</button>
               <div id="status"></div>
             </div>
@@ -217,26 +135,18 @@
       </html>
     `;
 
-    // Event listeners
     const btn = document.getElementById("sendBtn");
     const statusEl = document.getElementById("status");
-
     btn.addEventListener("click", () => sendAccessRequest(ip, btn, statusEl));
   }
 
-  // Enviar solicitud a Discord
   async function sendAccessRequest(ip, btn, statusEl) {
     if (state.sending) return;
 
-    const nameInput = document.getElementById("name");
-    const reasonInput = document.getElementById("reason");
+    const name = (document.getElementById("name").value.trim() || "Anónimo").slice(0, CONFIG.MAX_NAME_LENGTH);
+    let reason = (document.getElementById("reason").value.trim() || "Sin motivo especificado").slice(0, CONFIG.MAX_REASON_LENGTH);
 
-    const name = (nameInput.value.trim() || "Anónimo").slice(0, CONFIG.MAX_NAME_LENGTH);
-    let reason = (reasonInput.value.trim() || "Sin motivo especificado").slice(0, CONFIG.MAX_REASON_LENGTH);
-
-    if (reason.length < 10) {
-      reason = "Motivo demasiado corto: " + reason;
-    }
+    if (reason.length < 8) reason = "Motivo no especificado correctamente.";
 
     state.sending = true;
     btn.disabled = true;
@@ -245,78 +155,74 @@
 
     try {
       const payload = {
-        username: "Control de Acceso",
+        username: "Solicitud de Acceso",
         avatar_url: "https://cdn-icons-png.flaticon.com/512/1828/1828490.png",
+        content: null,   // importante para evitar errores
         embeds: [{
-          title: "🚨 Nueva Solicitud de Acceso",
+          title: "🚨 Nueva solicitud de acceso",
           color: 0xe50914,
           fields: [
-            { name: "Nombre", value: name || "—", inline: true },
+            { name: "Nombre", value: name, inline: true },
             { name: "IP", value: `\`${ip}\``, inline: true },
-            { name: "Motivo", value: reason || "—", inline: false }
+            { name: "Motivo", value: reason, inline: false }
           ],
           timestamp: new Date().toISOString(),
-          footer: { text: `Sistema de acceso • ${location.hostname}` }
+          footer: { text: `Sistema • ${location.hostname}` }
         }]
       };
 
       const res = await fetch(CONFIG.WEBHOOK, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
+        mode: "no-cors",           // ← Clave para evitar CORS
+        cache: "no-store"
       });
 
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
+      // Con mode: 'no-cors' no podemos leer res.ok, así que asumimos éxito si no hay excepción
       statusEl.style.color = "#4ade80";
-      statusEl.textContent = "✅ Solicitud enviada correctamente. Gracias.";
-      btn.textContent = "Solicitud enviada ✓";
+      statusEl.textContent = "✅ Solicitud enviada correctamente. Gracias!";
+      btn.textContent = "Enviado ✓";
       btn.disabled = true;
 
     } catch (err) {
-      console.error("Error enviando webhook:", err);
+      console.error("Error al enviar webhook:", err);
       statusEl.style.color = "#f87171";
-      statusEl.textContent = "❌ Error al enviar. Inténtalo de nuevo más tarde.";
+      statusEl.textContent = "❌ Error al enviar. Revisa tu conexión o inténtalo más tarde.";
     } finally {
       state.sending = false;
-      if (btn.textContent !== "Solicitud enviada ✓") {
-        btn.disabled = false;
-      }
     }
   }
 
-  // Verificación principal de IP
+  // Verificación de IP
   async function checkAccess() {
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), CONFIG.TIMEOUT_MS);
+      const timeout = setTimeout(() => controller.abort(), CONFIG.TIMEOUT_MS);
 
-      const response = await fetch(CONFIG.IP_API, {
+      const res = await fetch(CONFIG.IP_API, {
         signal: controller.signal,
-        cache: "no-store",
-        headers: { "Accept": "application/json" }
+        cache: "no-store"
       });
 
-      clearTimeout(timeoutId);
+      clearTimeout(timeout);
 
-      if (!response.ok) throw new Error("Servicio de IP no disponible");
+      if (!res.ok) throw new Error("IP service failed");
 
-      const data = await response.json();
+      const data = await res.json();
       const userIP = data.ip || data.query || "Desconocida";
 
       if (userIP !== CONFIG.ALLOWED_IP) {
-        renderBlockedScreen(userIP, "IP no autorizada");
+        renderBlockedScreen(userIP, "IP no permitida");
       }
-      // Si la IP coincide → no hacemos nada (el contenido normal se carga)
+      // IP correcta → no bloqueamos
 
-    } catch (error) {
-      console.warn("No se pudo verificar la IP:", error);
-      // En caso de fallo de verificación → más seguro bloquear
-      renderBlockedScreen("Desconocida", "Error en la verificación de IP");
+    } catch (err) {
+      console.warn("Error verificando IP:", err);
+      renderBlockedScreen("Desconocida", "No se pudo verificar tu IP");
     }
   }
 
-  // Iniciar verificación
   checkAccess();
 
 })();
