@@ -9,7 +9,7 @@
   };
 
   let isSending = false;
-  let userIP = "Desconocida";
+  let currentIP = "Desconocida";
 
   function escapeHTML(str = "") {
     return String(str)
@@ -21,6 +21,8 @@
   }
 
   function renderBlockedScreen(ip = "Desconocida", reason = "Acceso no autorizado") {
+    currentIP = ip;   // Guardamos la IP para usarla al enviar
+
     document.documentElement.innerHTML = `
       <!DOCTYPE html>
       <html lang="es">
@@ -31,40 +33,23 @@
         <style>
           @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
           *{margin:0;padding:0;box-sizing:border-box}
-          body{
-            font-family:'Inter',system-ui,sans-serif;
-            min-height:100vh;
-            background:linear-gradient(135deg,#0a0a0f,#12121a);
-            color:#fff;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            padding:20px;
-          }
-          .container{
-            width:100%;
-            max-width:880px;
-            background:#16161f;
-            border-radius:24px;
-            overflow:hidden;
-            box-shadow:0 30px 80px rgba(0,0,0,0.9);
-            border:1px solid #222;
-          }
-          .main{display:flex;flex-direction:column}
-          .left{padding:55px 48px;background:#1a1a24;border-bottom:1px solid #222}
+          body{font-family:'Inter',system-ui,sans-serif; min-height:100vh; background:linear-gradient(135deg,#0a0a0f,#12121a); color:#fff; display:flex; align-items:center; justify-content:center; padding:20px;}
+          .container{width:100%; max-width:880px; background:#16161f; border-radius:24px; overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,0.9); border:1px solid #222;}
+          .main{display:flex; flex-direction:column}
+          .left{padding:55px 48px; background:#1a1a24; border-bottom:1px solid #222}
           .right{padding:55px 48px}
-          h1{font-size:clamp(4rem,10vw,6.5rem);color:#e50914;line-height:1;margin-bottom:12px}
-          h2{font-size:1.85rem;margin-bottom:22px}
-          p{color:#bbb;margin-bottom:28px}
-          .info{background:#21212b;padding:17px 20px;border-radius:12px;margin-bottom:16px;border-left:5px solid #e50914}
-          input,textarea{width:100%;padding:16px 20px;background:#21212b;border:1px solid #333;border-radius:12px;color:#fff;font-size:1.05rem;margin-bottom:20px}
-          textarea{min-height:140px;resize:vertical}
-          input:focus,textarea:focus{border-color:#e50914;box-shadow:0 0 0 4px rgba(229,9,20,0.2);outline:none}
-          button{width:100%;background:#e50914;color:white;border:none;padding:18px;font-size:1.12rem;font-weight:700;border-radius:12px;cursor:pointer;transition:all .3s}
-          button:hover:not(:disabled){background:#f22;transform:translateY(-3px)}
-          button:disabled{background:#555;cursor:not-allowed}
-          #status{margin-top:20px;font-size:1.05rem;text-align:center;min-height:1.6em}
-          @media(min-width:768px){.main{flex-direction:row}.left{border-bottom:none;border-right:1px solid #222;flex:1.4}.right{flex:1}}
+          h1{font-size:clamp(4rem,10vw,6.5rem); color:#e50914; line-height:1; margin-bottom:12px}
+          h2{font-size:1.85rem; margin-bottom:22px}
+          p{color:#bbb; margin-bottom:28px}
+          .info{background:#21212b; padding:17px 20px; border-radius:12px; margin-bottom:16px; border-left:5px solid #e50914}
+          input,textarea{width:100%; padding:16px 20px; background:#21212b; border:1px solid #333; border-radius:12px; color:#fff; font-size:1.05rem; margin-bottom:20px}
+          textarea{min-height:140px; resize:vertical}
+          input:focus,textarea:focus{border-color:#e50914; box-shadow:0 0 0 4px rgba(229,9,20,0.2); outline:none}
+          button{width:100%; background:#e50914; color:white; border:none; padding:18px; font-size:1.12rem; font-weight:700; border-radius:12px; cursor:pointer; transition:all .3s}
+          button:hover:not(:disabled){background:#f22; transform:translateY(-3px)}
+          button:disabled{background:#555; cursor:not-allowed}
+          #status{margin-top:20px; font-size:1.05rem; text-align:center; min-height:1.6em}
+          @media(min-width:768px){.main{flex-direction:row} .left{border-bottom:none; border-right:1px solid #222; flex:1.4} .right{flex:1}}
         </style>
       </head>
       <body>
@@ -101,21 +86,22 @@
     const statusEl = document.getElementById("status");
 
     const name = (document.getElementById("name").value.trim() || "Anónimo").slice(0, 80);
-    const reason = (document.getElementById("reason").value.trim() || "Sin motivo").slice(0, 1400);
+    const reason = (document.getElementById("reason").value.trim() || "Sin motivo especificado").slice(0, 1400);
 
     btn.disabled = true;
     statusEl.style.color = "#aaa";
-    statusEl.textContent = "Enviando...";
+    statusEl.textContent = "Enviando solicitud...";
+
+    console.log("Intentando enviar webhook con IP:", currentIP);
 
     try {
-      // Payload muy simple (esto reduce problemas)
       const payload = {
         username: "Solicitud de Acceso",
-        content: `**Nueva solicitud**\n**Nombre:** ${name}\n**IP:** ${userIP}\n**Motivo:** ${reason}`,
+        content: `**Nueva solicitud de acceso**\n\n**Nombre:** ${name}\n**IP:** ${currentIP}\n**Motivo:** ${reason}`,
         avatar_url: "https://cdn-icons-png.flaticon.com/512/1828/1828490.png"
       };
 
-      await fetch(CONFIG.WEBHOOK + "?wait=true", {
+      await fetch(CONFIG.WEBHOOK, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -123,15 +109,16 @@
         cache: "no-store"
       });
 
-      // Si no lanza excepción, mostramos éxito
+      console.log("Fetch completado sin excepción (posible éxito)");
+
       statusEl.style.color = "#4ade80";
-      statusEl.innerHTML = "✅ <strong>¡Solicitud enviada correctamente!</strong><br>Gracias, te contactaremos pronto.";
+      statusEl.innerHTML = "✅ <strong>Solicitud enviada correctamente!</strong><br>Gracias, te contactaremos pronto.";
       btn.textContent = "✓ Enviado";
 
     } catch (err) {
-      console.error("Error detallado:", err);
+      console.error("Error enviando webhook:", err);
       statusEl.style.color = "#f87171";
-      statusEl.innerHTML = `❌ No se pudo enviar la solicitud.<br><small>Posible problema de conexión o CORS.<br>Prueba de nuevo en 20 segundos.</small>`;
+      statusEl.innerHTML = `❌ No se pudo enviar.<br><small>Revisa la consola (F12) para más detalles.</small>`;
     } finally {
       isSending = false;
     }
@@ -150,14 +137,13 @@
 
       clearTimeout(timeout);
       const data = await res.json();
-      userIP = data.ip || data.query || "Desconocida";
+      currentIP = data.ip || data.query || "Desconocida";
 
-      if (userIP !== CONFIG.ALLOWED_IP) {
-        renderBlockedScreen(userIP, "IP no permitida");
+      if (currentIP !== CONFIG.ALLOWED_IP) {
+        renderBlockedScreen(currentIP, "IP no permitida");
       }
-
     } catch (err) {
-      console.warn("Error IP:", err);
+      console.warn("Error verificando IP:", err);
       renderBlockedScreen("Desconocida", "Error al verificar IP");
     }
   }
