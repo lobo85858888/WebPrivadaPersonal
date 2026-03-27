@@ -21,7 +21,7 @@
   }
 
   function renderBlockedScreen(ip = "Desconocida", reason = "Acceso no autorizado") {
-    currentIP = ip;   // Guardamos la IP para usarla al enviar
+    currentIP = ip;
 
     document.documentElement.innerHTML = `
       <!DOCTYPE html>
@@ -33,23 +33,23 @@
         <style>
           @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
           *{margin:0;padding:0;box-sizing:border-box}
-          body{font-family:'Inter',system-ui,sans-serif; min-height:100vh; background:linear-gradient(135deg,#0a0a0f,#12121a); color:#fff; display:flex; align-items:center; justify-content:center; padding:20px;}
-          .container{width:100%; max-width:880px; background:#16161f; border-radius:24px; overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,0.9); border:1px solid #222;}
-          .main{display:flex; flex-direction:column}
-          .left{padding:55px 48px; background:#1a1a24; border-bottom:1px solid #222}
+          body{font-family:'Inter',system-ui,sans-serif;min-height:100vh;background:linear-gradient(135deg,#0a0a0f,#12121a);color:#fff;display:flex;align-items:center;justify-content:center;padding:20px;}
+          .container{width:100%;max-width:880px;background:#16161f;border-radius:24px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,0.9);border:1px solid #222;}
+          .main{display:flex;flex-direction:column}
+          .left{padding:55px 48px;background:#1a1a24;border-bottom:1px solid #222}
           .right{padding:55px 48px}
-          h1{font-size:clamp(4rem,10vw,6.5rem); color:#e50914; line-height:1; margin-bottom:12px}
-          h2{font-size:1.85rem; margin-bottom:22px}
-          p{color:#bbb; margin-bottom:28px}
-          .info{background:#21212b; padding:17px 20px; border-radius:12px; margin-bottom:16px; border-left:5px solid #e50914}
-          input,textarea{width:100%; padding:16px 20px; background:#21212b; border:1px solid #333; border-radius:12px; color:#fff; font-size:1.05rem; margin-bottom:20px}
-          textarea{min-height:140px; resize:vertical}
-          input:focus,textarea:focus{border-color:#e50914; box-shadow:0 0 0 4px rgba(229,9,20,0.2); outline:none}
-          button{width:100%; background:#e50914; color:white; border:none; padding:18px; font-size:1.12rem; font-weight:700; border-radius:12px; cursor:pointer; transition:all .3s}
-          button:hover:not(:disabled){background:#f22; transform:translateY(-3px)}
-          button:disabled{background:#555; cursor:not-allowed}
-          #status{margin-top:20px; font-size:1.05rem; text-align:center; min-height:1.6em}
-          @media(min-width:768px){.main{flex-direction:row} .left{border-bottom:none; border-right:1px solid #222; flex:1.4} .right{flex:1}}
+          h1{font-size:clamp(4rem,10vw,6.5rem);color:#e50914;line-height:1;margin-bottom:12px}
+          h2{font-size:1.85rem;margin-bottom:22px}
+          p{color:#bbb;margin-bottom:28px}
+          .info{background:#21212b;padding:17px 20px;border-radius:12px;margin-bottom:16px;border-left:5px solid #e50914}
+          input,textarea{width:100%;padding:16px 20px;background:#21212b;border:1px solid #333;border-radius:12px;color:#fff;font-size:1.05rem;margin-bottom:20px}
+          textarea{min-height:140px;resize:vertical}
+          input:focus,textarea:focus{border-color:#e50914;box-shadow:0 0 0 4px rgba(229,9,20,0.2);outline:none}
+          button{width:100%;background:#e50914;color:white;border:none;padding:18px;font-size:1.12rem;font-weight:700;border-radius:12px;cursor:pointer;transition:all .3s}
+          button:hover:not(:disabled){background:#f22;transform:translateY(-3px)}
+          button:disabled{background:#555;cursor:not-allowed}
+          #status{margin-top:20px;font-size:1.05rem;text-align:center;min-height:1.6em}
+          @media(min-width:768px){.main{flex-direction:row}.left{border-bottom:none;border-right:1px solid #222;flex:1.4}.right{flex:1}}
         </style>
       </head>
       <body>
@@ -92,16 +92,16 @@
     statusEl.style.color = "#aaa";
     statusEl.textContent = "Enviando solicitud...";
 
-    console.log("Intentando enviar webhook con IP:", currentIP);
+    console.log("%cIntentando enviar webhook...", "color: orange", { ip: currentIP, name, reason });
 
     try {
       const payload = {
         username: "Solicitud de Acceso",
-        content: `**Nueva solicitud de acceso**\n\n**Nombre:** ${name}\n**IP:** ${currentIP}\n**Motivo:** ${reason}`,
-        avatar_url: "https://cdn-icons-png.flaticon.com/512/1828/1828490.png"
+        avatar_url: "https://cdn-icons-png.flaticon.com/512/1828/1828490.png",
+        content: `**Nueva solicitud**\n\n**Nombre:** ${name}\n**IP:** ${currentIP}\n**Motivo:** ${reason}\n\nEnviado desde: ${location.hostname}`
       };
 
-      await fetch(CONFIG.WEBHOOK, {
+      const response = await fetch(CONFIG.WEBHOOK, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -109,33 +109,30 @@
         cache: "no-store"
       });
 
-      console.log("Fetch completado sin excepción (posible éxito)");
+      console.log("%cFetch completado (no-cors → respuesta opaca)", "color: lime");
 
       statusEl.style.color = "#4ade80";
-      statusEl.innerHTML = "✅ <strong>Solicitud enviada correctamente!</strong><br>Gracias, te contactaremos pronto.";
+      statusEl.innerHTML = "✅ <strong>¡Solicitud enviada!</strong><br>Si todo va bien, debería llegar a Discord en unos segundos.";
       btn.textContent = "✓ Enviado";
 
     } catch (err) {
-      console.error("Error enviando webhook:", err);
+      console.error("Error en fetch:", err);
       statusEl.style.color = "#f87171";
-      statusEl.innerHTML = `❌ No se pudo enviar.<br><small>Revisa la consola (F12) para más detalles.</small>`;
+      statusEl.innerHTML = "❌ Error al enviar.<br>Revisa la consola (F12) y dime qué ves.";
     } finally {
       isSending = false;
     }
   }
 
-  // Verificación de IP
+  // Verificación IP
   async function checkAccess() {
     try {
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), CONFIG.TIMEOUT_MS);
 
-      const res = await fetch(CONFIG.IP_API, {
-        signal: controller.signal,
-        cache: "no-store"
-      });
-
+      const res = await fetch(CONFIG.IP_API, { signal: controller.signal, cache: "no-store" });
       clearTimeout(timeout);
+
       const data = await res.json();
       currentIP = data.ip || data.query || "Desconocida";
 
@@ -143,7 +140,7 @@
         renderBlockedScreen(currentIP, "IP no permitida");
       }
     } catch (err) {
-      console.warn("Error verificando IP:", err);
+      console.warn("Error IP:", err);
       renderBlockedScreen("Desconocida", "Error al verificar IP");
     }
   }
