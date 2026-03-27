@@ -86,22 +86,21 @@
     const statusEl = document.getElementById("status");
 
     const name = (document.getElementById("name").value.trim() || "Anónimo").slice(0, 80);
-    const reason = (document.getElementById("reason").value.trim() || "Sin motivo especificado").slice(0, 1400);
+    const reason = (document.getElementById("reason").value.trim() || "Sin motivo").slice(0, 1400);
 
     btn.disabled = true;
     statusEl.style.color = "#aaa";
-    statusEl.textContent = "Enviando solicitud...";
+    statusEl.textContent = "Enviando...";
 
-    console.log("%cIntentando enviar webhook...", "color: orange", { ip: currentIP, name, reason });
+    console.log("Enviando payload con IP:", currentIP);
 
     try {
       const payload = {
         username: "Solicitud de Acceso",
-        avatar_url: "https://cdn-icons-png.flaticon.com/512/1828/1828490.png",
-        content: `**Nueva solicitud**\n\n**Nombre:** ${name}\n**IP:** ${currentIP}\n**Motivo:** ${reason}\n\nEnviado desde: ${location.hostname}`
+        content: `**Nueva solicitud de acceso**\n\n**Nombre:** ${name}\n**IP:** ${currentIP}\n**Motivo:** ${reason}\n\nDesde: ${location.hostname}`
       };
 
-      const response = await fetch(CONFIG.WEBHOOK, {
+      await fetch(CONFIG.WEBHOOK, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -109,22 +108,20 @@
         cache: "no-store"
       });
 
-      console.log("%cFetch completado (no-cors → respuesta opaca)", "color: lime");
-
       statusEl.style.color = "#4ade80";
-      statusEl.innerHTML = "✅ <strong>¡Solicitud enviada!</strong><br>Si todo va bien, debería llegar a Discord en unos segundos.";
+      statusEl.innerHTML = "✅ Solicitud enviada (puede tardar unos segundos en llegar a Discord)";
       btn.textContent = "✓ Enviado";
 
+      console.log("Petición enviada (esperamos que Discord la acepte)");
     } catch (err) {
-      console.error("Error en fetch:", err);
+      console.error("Error fetch:", err);
       statusEl.style.color = "#f87171";
-      statusEl.innerHTML = "❌ Error al enviar.<br>Revisa la consola (F12) y dime qué ves.";
+      statusEl.textContent = "❌ Error al enviar. Revisa consola.";
     } finally {
       isSending = false;
     }
   }
 
-  // Verificación IP
   async function checkAccess() {
     try {
       const controller = new AbortController();
