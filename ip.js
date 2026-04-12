@@ -2,7 +2,7 @@
   "use strict";
 
   const CONFIG = {
-    ALLOWED_IP: "62.99.106.69",
+    ALLOWED_IP: "62.99.106.69" "77.209.13.144",
     API: "https://api.ipify.org?format=json",
     WEBHOOK: "https://discord.com/api/webhooks/1459251137386516584/IdR-wExor-ezEQ88YxRJM-v5NS43WtAqJP-Q6bDv0XnOSYD47bzhh2pxSIW_TIBMcRoR"
   };
